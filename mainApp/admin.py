@@ -13,18 +13,31 @@ class CustomUserAdmin(UserAdmin):
 
     fieldsets = (
         (None, {"fields": ("username", "password", "user_type")}),
-        ("Permissions", {"fields": ("is_staff", "is_active", "groups", "user_permissions")}),
+        (
+            "Permissions",
+            {"fields": ("is_staff", "is_active", "groups", "user_permissions")},
+        ),
     )
     add_fieldsets = (
-        (None, {
-            "classes": ("wide",),
-            "fields": (
-                "username", "password1", "password2", "is_staff", "is_active", "user_permissions", "user_type"
-            )
-        }),
+        (
+            None,
+            {
+                "classes": ("wide",),
+                "fields": (
+                    "username",
+                    "password1",
+                    "password2",
+                    "is_staff",
+                    "is_active",
+                    "user_permissions",
+                    "user_type",
+                ),
+            },
+        ),
     )
 
     search_fields = ("username",)
     ordering = ("username",)
+
 
 admin.site.register(CustomUser, CustomUserAdmin)
