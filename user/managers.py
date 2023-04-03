@@ -7,6 +7,7 @@ class CustomUserManager(BaseUserManager):
     def create_user(self, username, password, **kwargs):
         if not username:
             raise ValueError(_("Username must be valid"))
+
         user = self.model(username=username, **kwargs)
         user.set_password(password)
         user.save()

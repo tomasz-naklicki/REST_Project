@@ -1,12 +1,6 @@
-from django.shortcuts import render
 from rest_framework import viewsets, permissions
-from .models import Pokemon, Team, Move, CustomUser
-from .serializers import (
-    PokemonSerializer,
-    MoveSerializer,
-    TeamSerializer,
-    CustomUserSerializer,
-)
+from .models import Pokemon, Team, Move
+from .serializers import PokemonSerializer, MoveSerializer, TeamSerializer
 
 
 class PokemonViewSet(viewsets.ModelViewSet):
@@ -24,10 +18,4 @@ class MoveViewSet(viewsets.ModelViewSet):
 class TeamViewSet(viewsets.ModelViewSet):
     queryset = Team.objects.all().order_by("name")
     serializer_class = TeamSerializer
-    permission_classes = [permissions.IsAuthenticated]
-
-
-class CustomUserViewSet(viewsets.ModelViewSet):
-    queryset = CustomUser.objects.all().order_by("username")
-    serializer_class = CustomUserSerializer
     permission_classes = [permissions.IsAuthenticated]
