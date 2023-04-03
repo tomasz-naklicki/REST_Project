@@ -1,13 +1,8 @@
 import dataclasses
 import jwt
 import datetime
-from typing import TYPE_CHECKING
 from .models import CustomUser
 from django.conf import settings
-
-
-if TYPE_CHECKING:
-    from .models import CustomUser
 
 
 @dataclasses.dataclass

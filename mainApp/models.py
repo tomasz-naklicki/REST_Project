@@ -32,26 +32,24 @@ class Move(models.Model):
     power = models.IntegerField(
         help_text="Enter move power if applicable",
         blank=True,
+        null=True,
     )
 
     accuracy = models.IntegerField(
         help_text="Enter move accuracy if applicable",
         blank=True,
+        null=True,
     )
 
 
 # Team model
 class Team(models.Model):
-    owner = models.ForeignKey(
-        settings.AUTH_USER_MODEL,
-        on_delete=models.CASCADE,
-    )
-
+    owner_id = models.IntegerField(verbose_name="Owner ID", default=1)
     name = models.CharField(max_length=50, help_text="Enter a name for the team")
 
-    def clean(self):
-        if self.pokemon_set.count() > 6:
-            raise ValidationError("A team can only have 6 Pokemon")
+    # def clean(self):
+    #     if self.pokemon_set.count() > 6:
+    #         raise ValidationError("A team can only have 6 Pokemon")
 
 
 # Pokemon model
@@ -83,10 +81,13 @@ class Pokemon(models.Model):
         help_text="Enter second type of the Pokemon",
         verbose_name="Second type",
     )
+    ability = models.CharField(max_length=30, default="", blank=True)
 
     team = models.ForeignKey(
         Team,
         on_delete=models.CASCADE,
+        blank=True,
+        null=True,
     )
 
     hp = models.IntegerField(
@@ -114,10 +115,8 @@ class Pokemon(models.Model):
 
     moves = models.ManyToManyField(
         to=Move,
+        blank=True,
+        null=True,
     )
 
-    def save(self, *args, **kwargs):
-        if self.moves.count() > 4:
-            raise ValidationError(_("Pokemon can only learn 4 moves"))
-        self.team.clean()
-        return super().save(*args, **kwargs)
+    #
